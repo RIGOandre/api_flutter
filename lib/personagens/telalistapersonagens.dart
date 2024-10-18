@@ -97,7 +97,7 @@ import 'package:api_flutter/personagens/teladetalhespersonagem.dart';
                 onTap: () => Navigator.push(
                     context, 
                     MaterialPageRoute(
-                      builder: (context) => TelaDetalhesPersonagem())),
+                      builder: (context) => TelaDetalhesPersonagem(personagem: _personagens[index]))),
                 child: Card(
                   child: ListTile(
                     leading: CircleAvatar(

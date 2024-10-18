@@ -6,7 +6,7 @@ import 'package:api_flutter/model/personagem.dart';
 class TelaDetalhesPersonagem extends StatefulWidget {
   final Personagem personagem;
 
-  const TelaDetalhesPersonagem({required this.personagem, super.key});
+  const TelaDetalhesPersonagem({Key? key, required this.personagem}) : super(key: key);
 
   @override
   _TelaDetalhesPersonagemState createState() => _TelaDetalhesPersonagemState();
@@ -15,6 +15,7 @@ class TelaDetalhesPersonagem extends StatefulWidget {
 class _TelaDetalhesPersonagemState extends State<TelaDetalhesPersonagem> {
   bool _loading = true;
   late Personagem _detalhesPersonagem;
+  List<String> _episodiosNomes = []; 
 
   @override
   void initState() {
@@ -42,6 +43,7 @@ class _TelaDetalhesPersonagemState extends State<TelaDetalhesPersonagem> {
         );
         _loading = false;
       });
+      await _loadEpisodiosNomes();
     } else {
       setState(() {
         _loading = false;
@@ -50,12 +52,28 @@ class _TelaDetalhesPersonagemState extends State<TelaDetalhesPersonagem> {
     }
   }
 
+  Future<void> _loadEpisodiosNomes() async {
+    List<String> nomes = [];
+    for (String url in _detalhesPersonagem.episodes) {
+      final response = await http.Client().get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        var dados = json.decode(response.body);
+        nomes.add(dados['name']); 
+      } else {
+        debugPrint('Erro ao carregar episódio: $url');
+      }
+    }
+    setState(() {
+      _episodiosNomes = nomes; 
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'personagem.name',
+          'Personagem',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.deepPurple,
@@ -68,22 +86,26 @@ class _TelaDetalhesPersonagemState extends State<TelaDetalhesPersonagem> {
 
   Widget _buildDetalhes() {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Image.network(_detalhesPersonagem.image),
-          SizedBox(height: 16),
-          Text(
-            _detalhesPersonagem.name,
-            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-          ),
-          Text('Status: ${_detalhesPersonagem.status}'),
-          Text('Espécie: ${_detalhesPersonagem.species}'),
-          Text('Tipo: ${_detalhesPersonagem.type}'),
-          Text('Gênero: ${_detalhesPersonagem.gender}'),
-          SizedBox(height: 16),
-          Text('Episódios:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          ..._detalhesPersonagem.episodes.map((episode) => Text(episode)).toList(),
-        ],
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(_detalhesPersonagem.image),
+            SizedBox(height: 16),
+            Text(
+              _detalhesPersonagem.name,
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            Text('Status: ${_detalhesPersonagem.status}', textAlign: TextAlign.center),
+            Text('Espécie: ${_detalhesPersonagem.species}', textAlign: TextAlign.center),
+            Text('Tipo: ${_detalhesPersonagem.type}', textAlign: TextAlign.center),
+            Text('Gênero: ${_detalhesPersonagem.gender}', textAlign: TextAlign.center),
+            const SizedBox(height: 36),
+            const Text('Episódios:', style: TextStyle(fontSize : 30, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
+            ..._episodiosNomes.map((nome) => Text(nome, textAlign: TextAlign.center)).toList(),
+          ],
+        ),
       ),
     );
   }

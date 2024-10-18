@@ -81,6 +81,7 @@ class Home extends StatelessWidget {
                     width: 120,
                     height: 120,
                   ),
+                  
                   const Text("Episódios", style: TextStyle(fontSize: 48)),
                 ]),
               )

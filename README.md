@@ -1,16 +1,18 @@
-# api_flutter
+# Rick and Morty Explorer API
 
-A new Flutter project.
+Este é um aplicativo desenvolvido com Flutter que consome a API oficial de Rick and Morty para exibir informações sobre os personagens, episódios e locais da série.
 
-## Getting Started
+## Funcionalidades
 
-This project is a starting point for a Flutter application.
+- **Explorar Personagens**: Veja a lista completa de personagens, incluindo detalhes como nome, espécie, gênero, localização e status.
+- **Episódios**: Navegue por todos os episódios da série, com informações como título, data de lançamento e personagens presentes.
+- **Locais**: Explore os diferentes mundos e localidades da série, com detalhes sobre seus habitantes.
+- **Busca Personalizada**: Filtre personagens, episódios e locais por parâmetros específicos.
+- **Interface Responsiva**: Design intuitivo e adaptável para diferentes tamanhos de tela.
+  
+## Tecnologias Utilizadas
 
-A few resources to get you started if this is your first Flutter project:
+- **Flutter**: Framework para construção do aplicativo multiplataforma.
+- **Dart**: Linguagem de programação para a lógica do aplicativo.
+- **Rick and Morty API**: API utilizada para obter todos os dados sobre a série.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

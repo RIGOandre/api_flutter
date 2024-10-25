@@ -58,7 +58,7 @@ import 'package:api_flutter/personagens/teladetalhespersonagem.dart';
 
     void _onScroll() {
       if (_scrollController .offset >= _scrollController.position.maxScrollExtent * 0.9 &&
-          !_loading) {
+          !_loading && _pagina <= 42) {
         _pagina++;
         _loadPersonagens();
       }
